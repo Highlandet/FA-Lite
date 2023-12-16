@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Deals</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        function validateForm() {
+            var amountRub = parseFloat(document.getElementsByName('amount_rub')[0].value);
+            var cryptocurrency = document.getElementsByName('cryptocurrency')[0].value;
+            var exchangeRate = parseFloat(document.getElementsByName('exchange_rate')[0].value);
+            var dealType = document.getElementsByName('deal_type')[0].value;
+            var creatingTime = new Date(document.getElementsByName('creating_time')[0].value);
+
+            var isValid = !isNaN(amountRub) && amountRub > 0 && !isNaN(exchangeRate) && exchangeRate > 0 && cryptocurrency !== "" && dealType !== "" && creatingTime instanceof Date && !isNaN(creatingTime);
+
+            var addButton = document.getElementById('addDealButton');
+
+            addButton.disabled = !isValid;
+
+            return isValid;
+        }
+    </script>
+</head>
+<body>
+    <h1>Crypto Deals</h1>
+    <div class="forms-container">
+        <div class="form-wrapper">
+            <form action="/add_deal" method="POST" onsubmit="return validateForm()">
+                <label for="amount_rub">Сумма (RUB):</label>
+                <input type="number" step="1" name="amount_rub" required><br>
+
+                <label for="cryptocurrency">Криптовалюта:</label>
+                <select name="cryptocurrency" required>
+                    <option value="BTC">BTC</option>
+                    <option value="TON">TON</option>
+                    <option value="USDT">USDT</option>
+                    <option value="ETH">ETH</option>
+                    <option value="BNB">BNB</option>
+                </select><br>
+
+                <label for="exchange_rate">Курс:</label>
+                <input type="number" step="0.01" name="exchange_rate" required><br>
+
+                <label for="deal_type">Тип транзакции:</label>
+                <select name="deal_type" required>
+                    <option value="Продажа">Продажа</option>
+                    <option value="Покупка">Покупка</option>
+                </select><br>
+
+                <label for="timestamp">Дата и время:</label>
+                <input type="datetime-local" name="creating_time" value="{{ current_time }}" required><br>
+
+                <button type="submit">Добавить сделку</button>
+            </form>
+        </div>
+        <div class="form-wrapper">
+            <form action="/update_rates" method="POST">
+                <button type="submit">Обновить курсы криптовалют</button>
+            </form>
+            <div class="crypto-rates">
+                <p>АКТУАЛЬНЫЕ КУРСЫ:</p>
+                <ul>
+                    {% for crypto, rate in crypto_rates.items() %}
+                        <li>{{ crypto }}: {{ rate }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="form-wrapper">
+            <form action="/filter_deals" method="POST">
+                <label for="start_date">Сортировать с:</label>
+                <input type="datetime-local" name="start_date" required><br>
+
+                <label for="end_date">по:</label>
+                <input type="datetime-local" name="end_date" required><br>
+
+                <button type="submit">Посчитать спред и маржу!</button>
+
+                <div class="filter-results">
+                    <p>РЕЗУЛЬТАТЫ ФИЛЬТРАЦИИ</p>
+                    <p>Сумма продаж: {{ sales_sum }}</p>
+                    <p>Сумма покупок: {{ purchase_sum }}</p>
+                    <p>Маржа: {{ difference }}</p>
+                    <p>Спред: {{ ratio }}%</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Сумма (RUB)</th>
+                <th>Криптовалюта</th>
+                <th>Курс</th>
+                <th>Тип транзакции</th>
+                <th>Дата и время проведения</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for deal in deals %}
+            <tr>
+                <td>{{ deal.amount_rub }}</td>
+                <td>{{ deal.cryptocurrency }}</td>
+                <td>{{ deal.exchange_rate }}</td>
+                <td>{{ deal.deal_type }}</td>
+                <td>{{ deal.creating_time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

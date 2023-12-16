@@ -1,0 +1,121 @@
+@font-face {
+    font-family: 'CiferFont';
+    src: url('fonts/better-vcr5.1.ttf') format('ttf'),
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'CiferFont';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #000;
+    color: #fff;
+}
+
+
+
+h1 {
+    font-family: 'CiferFont';
+    color: #61dafb;
+}
+
+.forms-container {
+    font-family: 'CiferFont';
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.form-wrapper {
+    font-family: 'CiferFont';
+    margin: 0 10px;
+}
+
+form {
+    font-family: 'CiferFont';
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+form label {
+    font-family: 'CiferFont';
+    display: block;
+    margin-bottom: 5px;
+    color: #61dafb;
+}
+
+form input,
+form select,
+form button {
+    font-family: 'CiferFont';
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #61dafb;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+}
+
+form input[type="datetime-local"] {
+    font-family: 'CiferFont';
+    width: calc(100% - 16px);
+}
+
+form button {
+    font-family: 'CiferFont';
+    background-color: #61dafb;
+    color: #1a1a1a;
+    cursor: pointer;
+}
+
+form button:disabled {
+    font-family: 'CiferFont';
+    background-color: #999;
+    cursor: not-allowed;
+}
+
+table {
+    font-family: 'CiferFont';
+    border-collapse: collapse;
+    width: 80%;
+    margin-top: 20px;
+}
+
+table, th, td {
+    font-family: 'CiferFont';
+    border: 1px solid #444;
+}
+
+th, td {
+    font-family: 'CiferFont';
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    font-family: 'CiferFont';
+    background-color: #333;
+    color: #fff;
+}
+
+.filter-results {
+    font-family: 'CiferFont';
+    margin-bottom: 10px;
+    border: 2px solid #444;
+    padding: 10px;
+    background-color: #666;
+    color: #fff;
+}
+
+.crypto-rates {
+    font-family: 'CiferFont';
+    margin-bottom: 10px;
+    border: 2px solid rgb(0, 0, 0);
+    padding: 10px;
+    background-color: rgba(102, 102, 102, 0.7);
+    color: #fff;
+}
